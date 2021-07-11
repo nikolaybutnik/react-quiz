@@ -3,14 +3,21 @@ import { fetchQuizQuestions } from './API'
 // Components
 import QuestionCard from './components/QuestionCard'
 // Types
-import { Difficulty } from './API'
+import { QuestionState, Difficulty } from './API'
 
 const TOTAL_QUESTIONS = 10
 
+type AnswerObject = {
+  question: string
+  answer: string
+  correct: boolean
+  correctAnswer: string
+}
+
 const App = () => {
   const [number, setNumber] = useState(0)
-  const [questions, setQuestions] = useState([])
-  const [userAnswers, setUserAnswers] = useState([])
+  const [questions, setQuestions] = useState<QuestionState[]>([])
+  const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
 
   console.log(fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY))
 
