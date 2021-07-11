@@ -1,3 +1,5 @@
+import { shuffleArray } from './utils'
+
 // enums allow storage of keywords and associate them with numeric values
 export enum Difficulty {
   EASY = 'easy',
@@ -28,6 +30,11 @@ export const fetchQuizQuestions = async (
   const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple`
   // double await: first await the result of the fetch, then await json conversion
   const data = await (await fetch(endpoint)).json()
-  console.log(data)
-  // return data.results.map((question: Question) => ({ ...question }))
+  return data.results.map((question: Question) => ({
+    ...question,
+    answers: shuffleArray([
+      ...question.incorrect_answers,
+      question.correct_answer,
+    ]),
+  }))
 }

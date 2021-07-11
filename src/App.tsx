@@ -12,7 +12,7 @@ const App = () => {
   const [questions, setQuestions] = useState([])
   const [userAnswers, setUserAnswers] = useState([])
 
-  fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY)
+  console.log(fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY))
 
   const startTrivia = () => {}
 
