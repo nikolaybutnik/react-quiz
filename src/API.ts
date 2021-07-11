@@ -5,6 +5,21 @@ export enum Difficulty {
   HARD = 'hard',
 }
 
+// Default description of the information received from the API
+export type Question = {
+  category: string
+  correct_answer: string
+  difficulty: string
+  incorrect_answers: string[]
+  question: string
+  type: string
+}
+
+// Uses types from Question, but adds another property
+export type QuestionState = Question & {
+  answers: string[]
+}
+
 export const fetchQuizQuestions = async (
   amount: number,
   difficulty: Difficulty
@@ -14,4 +29,5 @@ export const fetchQuizQuestions = async (
   // double await: first await the result of the fetch, then await json conversion
   const data = await (await fetch(endpoint)).json()
   console.log(data)
+  // return data.results.map((question: Question) => ({ ...question }))
 }
