@@ -18,10 +18,29 @@ const App = () => {
   const [number, setNumber] = useState(0)
   const [questions, setQuestions] = useState<QuestionState[]>([])
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
+  const [loading, setLoading] = useState(false)
+  const [gameOver, setGameOver] = useState(true)
+  const [score, setScore] = useState(0)
 
-  console.log(fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY))
+  console.log(questions)
 
-  const startTrivia = () => {}
+  // reset the game
+  const startTrivia = async () => {
+    setLoading(true)
+    setGameOver(false)
+
+    const newQuestions = await fetchQuizQuestions(
+      TOTAL_QUESTIONS,
+      Difficulty.EASY
+    )
+
+    setQuestions(newQuestions)
+    setScore(0)
+    setUserAnswers([])
+    setNumber(0)
+
+    setLoading(false)
+  }
 
   const nextQuestion = () => {}
 
