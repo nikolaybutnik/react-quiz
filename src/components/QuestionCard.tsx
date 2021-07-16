@@ -1,10 +1,11 @@
 import React from 'react'
+import { AnswerObject } from '../App'
 
 type Props = {
   question: string
   answers: string[]
-  callback: any
-  userAnswer: any
+  callback: (e: React.MouseEvent<HTMLButtonElement>) => void // void means the function does not return a value
+  userAnswer: AnswerObject | undefined // can be underfined if no user answers have yet been given
   questionNumber: number
   totalQuestions: number
 }
@@ -26,7 +27,9 @@ const QuestionCard: React.FC<Props> = ({
       {answers.map((answer) => (
         <button
           key={answer}
-          disabled={userAnswer} // disable if user answer was given. the prop passed in is userAnswers[number]
+          // disable if user answer was given. the prop passed in is userAnswers[number].
+          // !! coerces the value into boolean. can acheive the same with ternary operator.
+          disabled={!!userAnswer}
           value={answer}
           onClick={callback}
         >
