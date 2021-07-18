@@ -1,5 +1,7 @@
 import React from 'react'
 import { AnswerObject } from '../App'
+// Styles
+import { Wrapper, ButtonWrapper } from './QuestionCard.styles'
 
 type Props = {
   question: string
@@ -18,26 +20,32 @@ const QuestionCard: React.FC<Props> = ({
   questionNumber,
   totalQuestions,
 }) => (
-  <div>
+  <Wrapper>
     <p className="number">
       Question: {questionNumber} / {totalQuestions}
     </p>
     <p dangerouslySetInnerHTML={{ __html: question }} />
     <div>
       {answers.map((answer) => (
-        <button
+        <ButtonWrapper
           key={answer}
-          // disable if user answer was given. the prop passed in is userAnswers[number].
-          // !! coerces the value into boolean. can acheive the same with ternary operator.
-          disabled={!!userAnswer}
-          value={answer}
-          onClick={callback}
+          // ?. optional chaining. If userAnswer is undefined TS won't throw an error.
+          correct={userAnswer?.correctAnswer === answer}
+          userClicked={userAnswer?.answer === answer}
         >
-          <span dangerouslySetInnerHTML={{ __html: answer }} />
-        </button>
+          <button
+            // disable if user answer was given. the prop passed in is userAnswers[number].
+            // !! coerces the value into boolean. can acheive the same with ternary operator.
+            disabled={!!userAnswer}
+            value={answer}
+            onClick={callback}
+          >
+            <span dangerouslySetInnerHTML={{ __html: answer }} />
+          </button>
+        </ButtonWrapper>
       ))}
     </div>
-  </div>
+  </Wrapper>
 )
 
 export default QuestionCard
